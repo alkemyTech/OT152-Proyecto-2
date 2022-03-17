@@ -6,5 +6,3 @@ from decouple import config as cfg
 logging.config.fileConfig(cfg('FILE_PATH'))
 # Instansiate logger class
 logger = logging.getLogger('Grupo_Datos_G')
-
-logger.info('test')
