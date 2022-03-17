@@ -1,4 +1,5 @@
 from decouple import config
+
 import logging.config
 
 cfg_logging = config('CFG_PATH')
