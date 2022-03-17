@@ -1,5 +1,7 @@
 import logging
+
 import logging.config
+
 from decouple import config as cfg
 
 # Load logging configurations
