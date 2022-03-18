@@ -1,8 +1,8 @@
 import logging
 import logging.config
-from decouple import config as cfg
+import os
 
-logging.config.fileConfig(cfg('FILE_PATH'))
-#logging.config.fileConfig('logging.cfg')
-logger = logging.getLogger('root')
+file_conf = os.path.join(os.path.dirname(__file__), 'logging.cfg')
+logging.config.fileConfig(file_conf)
+logger = logging.getLogger('tooy')
 logger.info('inicio')
