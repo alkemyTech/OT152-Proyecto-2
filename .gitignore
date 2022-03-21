@@ -1,2 +1,6 @@
-*.log*
-venv
+*.env
+env/
+*.log
+.vscode
+*/venv
+venv/*
