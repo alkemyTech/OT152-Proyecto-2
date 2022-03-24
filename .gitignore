@@ -1,2 +1,8 @@
 *.log*
-venv
+.idea/
+*.env
+env/
+*.log
+.vscode
+*/venv
+venv/*
