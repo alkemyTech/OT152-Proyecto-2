@@ -34,7 +34,7 @@ def get_scores(data):
         word = data.attrib['Body']
     except KeyError:
         return
-    word = re.findall("(?<!\S)[A-Za-z]+(?!\S)|(?<!\S)[A-Za-z]+(?=:(?!\S))",
+    word = re.findall("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>",
                       word)
     score = data.attrib['Score']
     # I transform de variable score into int to find its relationship
@@ -63,12 +63,6 @@ def reducer(mapped_list):
 
 def top_ten(data):
     return data[0], data[1].most_common
-
-
-# I use this function to get a random post from to get the relation...
-# between its scores and amount of words in it.
-def get_random(data):
-    return random.choice(data)
 
 
 # I named this function as mapper 1 because it belongs to the first task
@@ -109,6 +103,6 @@ mapped2 = list(map(mapper_2, data_chunk_2))
 mapped = list(filter(None, mapped2))
 relationship = reducer(mapped)
 reduced_2 = reduce(reducer, relationship[0:1])
-result = get_random(reduced_2)
+result = random.choice(reduced_2)
 logging.info(f'A random post and its relationship between\
                 the score and number of words is: {result}')
