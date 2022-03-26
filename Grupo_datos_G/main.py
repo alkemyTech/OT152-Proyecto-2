@@ -1,5 +1,5 @@
-import logging
 import defusedxml.ElementTree as Et
+import logging
 import logging.config
 import re
 import time
