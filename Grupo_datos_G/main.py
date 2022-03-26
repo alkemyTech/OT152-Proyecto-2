@@ -2,7 +2,7 @@ import logging
 import logging.config
 import re
 import time
-import defusedxml.ElementTree as ET
+import defusedxml.ElementTree as Et
 from decouple import config as cfg
 from functools import reduce
 from typing import Counter
@@ -15,7 +15,7 @@ logger = logging.getLogger('Grupo_Datos_G')
 
 # top 10 posts mas vistos
 
-tree = ET.parse('posts.xml')
+tree = Et.parse('posts.xml')
 
 root = tree.getroot()
 
