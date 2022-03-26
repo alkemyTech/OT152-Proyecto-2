@@ -1,6 +1,6 @@
 import logging
 import logging.config
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 import re
 import time
 from decouple import config as cfg
