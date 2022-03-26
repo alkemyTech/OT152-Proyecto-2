@@ -1,7 +1,7 @@
 import logging.config
 from functools import reduce
 
-import defusedxml.ElementTree as ET
+import defusedxml.ElementTree as ETree
 from decouple import config as cfg
 
 from modules import get_tags_and_ansid, get_tags_with_acc_answ, split_and_count_tags, \
@@ -20,7 +20,7 @@ def read_xml():
 
             Returns: xml Element Tree
     """
-    file_xml = ET.parse('posts.xml')
+    file_xml = ETree.parse('posts.xml')
     return file_xml.getroot()
 
 
