@@ -26,9 +26,7 @@ def reducir_contadores(data1, data2):
 
 
 def separar_tags(data):
-    for key in data.items():
-        return dict([(key[0], key[1])])
-    # return dict([(tag[0], tag[1]) for tag in data.items()])
+    return dict([[key, data[1].copy] for key in data[0]])
 
 
 def get_10_sin_repuestas():
