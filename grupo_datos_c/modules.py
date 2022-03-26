@@ -1,5 +1,5 @@
-from collections import Counter
 import re
+from collections import Counter
 
 
 # Functions for top 10 tags ------------------------------------

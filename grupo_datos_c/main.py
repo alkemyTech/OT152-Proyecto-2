@@ -1,12 +1,12 @@
-from functools import reduce
 import logging.config
-import xml.etree.ElementTree as ET
+from functools import reduce
 
+import defusedxml.ElementTree as ET
 from decouple import config as cfg
 
-from modules import get_tags_and_ansid, get_tags_with_acc_answ, split_and_count_tags
-from modules import count_words_in_body, bodies_with_answer_count, generate_data_dict, get_bodies_and_answer_counts
-from modules import get_user_favcount
+from modules import get_tags_and_ansid, get_tags_with_acc_answ, split_and_count_tags, \
+                    count_words_in_body, bodies_with_answer_count, generate_data_dict, get_bodies_and_answer_counts, \
+                    get_user_favcount
 
 # Load logging configurations
 logging.config.fileConfig(cfg('FILE_PATH'))
