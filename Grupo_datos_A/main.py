@@ -34,7 +34,7 @@ def get_scores(data):
         word = data.attrib['Body']
     except KeyError:
         return
-    word = re.findall("(?<!\S)[A-Za-z]+(?!\S)|(?<!\S)[A-Za-z]+(?=:(?!\S))",
+    word = re.findall("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>",
                       word)
     score = data.attrib['Score']
     # I transform de variable score into int to find its relationship
