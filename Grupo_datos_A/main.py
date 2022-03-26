@@ -100,7 +100,7 @@ mapped_1 = list(filter(None, mapped_1))
 reduced1 = reduce(count_reduce, mapped_1)
 top_10 = dict(map(top_ten, reduced1.items()))
 top = list(reduced1.items())[:10]
-logging.debug('Top ten tags with most accepted answers:\n{}\n'.format(top))
+logging.info('Top ten tags with most accepted answers:\n{}\n'.format(top))
 
 # ________________________Calling the functions for the second task__________
 
@@ -110,5 +110,5 @@ mapped = list(filter(None, mapped2))
 relationship = reducer(mapped)
 reduced_2 = reduce(reducer, relationship[0:1])
 result = get_random(reduced_2)
-logging.debug(f'A random post and its relationship between\
+logging.info(f'A random post and its relationship between\
                 the score and number of words is: {result}')
