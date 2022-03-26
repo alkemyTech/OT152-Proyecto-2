@@ -4,9 +4,9 @@ from functools import reduce
 import defusedxml.ElementTree as ETree
 from decouple import config as cfg
 
-from modules import get_tags_and_ansid, get_tags_with_acc_answ, split_and_count_tags, \
-                    count_words_in_body, bodies_with_answer_count, generate_data_dict, get_bodies_and_answer_counts, \
-                    get_user_favcount
+from modules import bodies_with_answer_count, count_words_in_body, generate_data_dict, get_bodies_and_answer_counts,\
+                    get_tags_and_ansid, get_tags_with_acc_answ, get_user_favcount, split_and_count_tags
+
 
 # Load logging configurations
 logging.config.fileConfig(cfg('FILE_PATH'))
