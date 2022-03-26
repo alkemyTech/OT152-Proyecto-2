@@ -1,8 +1,8 @@
 import logging
 import logging.config
-import defusedxml.ElementTree as ET
 import re
 import time
+import defusedxml.ElementTree as ET
 from decouple import config as cfg
 from functools import reduce
 from typing import Counter
