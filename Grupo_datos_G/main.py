@@ -1,9 +1,9 @@
 import logging
 import logging.config
-from decouple import config as cfg
 import xml.etree.ElementTree as ET
 import re
 import time
+from decouple import config as cfg
 from functools import reduce
 from typing import Counter
 
