@@ -6,6 +6,7 @@ from decouple import config as cfg
 
 from modules import get_tags_and_ansid, get_tags_with_acc_answ, split_and_count_tags
 from modules import count_words_in_body, bodies_with_answer_count, generate_data_dict, get_bodies_and_answer_counts
+from modules import get_user_favcount
 
 # Load logging configurations
 logging.config.fileConfig(cfg('FILE_PATH'))
@@ -82,6 +83,7 @@ def top_10_tags():
     logger.info("\t Top 10 tags with accepted answer id: ")
     for tag, count in top_10:
         logger.info(f'\t Tag: {tag}, Count: {count}')
+    print()
 
 
 def mapped_chunks_words_per_answercount(data_chunks):
@@ -99,7 +101,7 @@ def mapped_chunks_words_per_answercount(data_chunks):
     return mapped
 
 
-def reducer_word_per_answer_ratio(data_dict_1, data_dict_2):
+def reducer(data_dict_1, data_dict_2):
     """
     Returns the sum of all lists of Counter dictionaries to get total of each tag with an accepted answer per chunk
 
@@ -117,15 +119,14 @@ def display_post_wordanswer_ratio(data, post_id=1):
     """
     Display post id, word count, answer count and words/answers ratio
 
-            Parametes:
+            Parameter:
                     data (dict): dictionary with data processed
     """
     try:
-        tabs = '\t' * 8
-        logger.info(f'\t Post N{post_id} has: \n'
-                    f'{tabs} Word count: {data[post_id]["Word count"]}\n'
-                    f'{tabs} Answer count: {data[post_id]["Answer count"]}\n'
-                    f'{tabs} Word/Answers ratio: {data[post_id]["Words per answers ratio"]}\n')
+        logger.info(f'\t Post N{post_id} has: '
+                    f'Word count {data[post_id]["Word count"]} - '
+                    f'Answer count: {data[post_id]["Answer count"]} - '
+                    f'Word/Answers ratio: {data[post_id]["Words per answers ratio"]}\n')
 
     except KeyError:
         logger.warning(' Post id is not in dictionary, post probably has not Answer count')
@@ -133,16 +134,51 @@ def display_post_wordanswer_ratio(data, post_id=1):
 
 def word_per_answer_ratio():
     root = read_xml()
-    # Load data by chunks of 1000 data each
+    # Load data by chunks of 4000 data each
     data_chunks = chunkify(root, 4000)
     # Perform first step of map reduce
     mapped_chunks = mapped_chunks_words_per_answercount(data_chunks)
-    reduced = reduce(reducer_word_per_answer_ratio, mapped_chunks)
+    # Perform second step of map reduce
+    reduced = reduce(reducer, mapped_chunks)
+    # Display data requested
     display_post_wordanswer_ratio(reduced, post_id=6)
+
+
+def percentage(data):
+    """
+    Returns Top 10 percentaje favorite question per user, and total favorite count
+            Parameter:
+                    data (Counter): contains all users id and its favorite quiestion count
+            Returns:
+                    data.most_common (list): top 10 user with porcentaje of favorite question
+                    total_favorites (int): total favorite count
+    """
+    total_favorites = sum(data.values())
+
+    for key, value in data.items():
+        data[key] = value * 100 / total_favorites
+
+    return data.most_common(10), total_favorites
+
+
+def top_10_percentage_fav_question():
+    root = read_xml()
+    # Load data by chunks of 1000 data each
+    data_chunks = chunkify(root, 1000)
+    # Perform first step of map reduce
+    mapped = map(get_user_favcount, data_chunks)
+    # Perform second step of map reduce
+    reduced = reduce(reducer, mapped)
+    # Calculate percentage and retrive top 10
+    top_10, fav_count = percentage(reduced)
+    # Display data requested
+    logger.info(f'\t Total Favorite Quiestion count: {fav_count}')
+    for user_id, percent in top_10:
+        logger.info(f'\t User Id {user_id} has {percent:.{2}f}% Favorite questions')
 
 
 # Run main script
 if __name__ == '__main__':
-    # Get top 10 tags with accepted answer id
     top_10_tags()
     word_per_answer_ratio()
+    top_10_percentage_fav_question()

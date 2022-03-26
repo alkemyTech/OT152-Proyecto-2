@@ -143,3 +143,22 @@ def generate_data_dict(data):
                                     'Answer count': answer_count,
                                     'Words per answers ratio': word_count / answer_count}})
     return data_dict
+
+
+# Top 10 User owner id percentaje of favourite questions--------------------
+def get_user_favcount(data):
+    """
+    Returns a Counter object with Owner id and question favorite count
+            Parameter:
+                    data (list): Contains data to process
+            Returns:
+                    Counter object (Counter): contains all owner ids and favorite count
+    """
+    counter = Counter()
+    for row in data:
+        # Check if post Id corresponds to Question
+        if row.attrib.get('PostTypeId') == '1':
+            # Check if Question has favorite count
+            if (row.attrib.get('FavoriteCount') is not None) and (row.attrib.get('FavoriteCount') != '0'):
+                counter.update({row.attrib.get('OwnerUserId'): int(row.attrib.get('FavoriteCount'))})
+    return counter
