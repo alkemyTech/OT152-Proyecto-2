@@ -12,27 +12,44 @@ logging.config.fileConfig(cfg('LOG_PATH'))
 logger = logging.getLogger('Grupo_Datos_F')
 
 def chunkify(iterable, len_of_chunk):
+    '''
+    Split an iterable into evenly sized Chunks
+    '''
     for i in range(0, len(iterable), len_of_chunk):
         yield iterable[i:i + len_of_chunk]
 
 def get_dates(data):
+    '''
+    Get the posts creation date and create a date object from a string
+    '''
     date_str = data.attrib['CreationDate']
     dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%f").date()
     return dt
 
 def mapper(data):
+    '''
+    Apply "mapper" functions
+    '''
     mapped_dates = list(map(get_dates, data))
     return mapped_dates
 
-def reducir_counter(data1, data2):
+def reduce_counter(data1, data2):
+    '''
+    Join data
+    '''
     data1.update(data2)
     return data1
 
+# Parse the file with posts data
 tree = ET.parse('posts.xml')
 root = tree.getroot()
+# Create chunks
 data_chunks = chunkify(root, 20)
+# Apply mapper and reducer functions
 mapped = list(map(mapper, data_chunks))    # ej: datetime.date(2010, 10, 31)
 mapped = list(map(Counter, mapped))    # ej: lista de Counter({datetime.date(2010, 10, 31) : 20})...
-reducido = reduce(reducir_counter, mapped)
+reducido = reduce(reduce_counter, mapped)
+# Get and show top 10 dates with less posts
 top_10_dates_less_post = reducido.most_common()[-10:]
-logging.INFO('Descargados el Top 10 de fechas con menor cantidad de post creados')
+print('Top 10 dates with less posts:\n',top_10_dates_less_post)
+logging.info(' Descargados el Top 10 de fechas con menor cantidad de post creados')
