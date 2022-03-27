@@ -34,30 +34,37 @@ def obtener_id_y_palabras(data):
         tags = data.attrib['Id']
     except Exception:
         return
-    # tags = re.findall('<(.+?)>', tags)
     body = data.attrib['Body']
-    body = re.findall('(?<!\S)[A-Za-z]+(?!\S)|(?<!\S)[A-Za-z]+(?=:(?!\S))', body)
+    texto = r'(?<!\S)[A-Za-z]+(?!\S)|(?<!\S)[A-Za-z]+(?=:(?!\S))'
+    body = re.findall(texto, body)
     visitas = int(data.attrib['ViewCount'])
     counter_palabras = len(body)
     if visitas == 0:
         relacion = 0
     else:
         relacion = round(counter_palabras / visitas, 2)
-    # counter_palabras = Counter(body)
     return tags, relacion
 
 
 def get_repuestas_favoritas(data):
     tipo_tags = data.attrib['PostTypeId']
-    if tipo_tags == '2':
+    if tipo_tags == '1':
         try:
-            cant_favoritos = data.attrib['FavoriteCount']
+            cant_favoritos = int(data.attrib['FavoriteCount'])
+            score = int(data.attrib['Score'])
         except Exception:
             cant_favoritos = 0
+            score = 0
     else:
         return
     tags = data.attrib['Id']
-    return tags, cant_favoritos
+    return {tags: [cant_favoritos, score]}
+
+
+def calulate_top_10(data):
+    key = list(data.keys())[0]
+    valor = list(data.values())[0][0]
+    return key, valor
 
 
 def get_10_sin_repuestas():
@@ -85,12 +92,15 @@ def promedio_score():
     root = tree.getroot()
     mapped = list(map(get_repuestas_favoritas, root))
     mapped = list(filter(None, mapped))
-    return mapped
+    lista = dict(map(calulate_top_10, mapped))
+    mapped1 = Counter(lista).most_common(10)
+    x =list(filter(lambda item: item[mapped[0]] == 'Richard', listOfDicts))
+    return mapped1
 
 
-top_10 = get_10_sin_repuestas()
-relacion_palabra_visita = palabra_vs_visita()
-print(top_10)
-print(relacion_palabra_visita)
-test = promedio_score()
-print(test)
+# top_10 = get_10_sin_repuestas()
+# relacion_palabra_visita = palabra_vs_visita()
+# print(top_10)
+# print(relacion_palabra_visita)
+top_10_favorito = promedio_score()
+print(top_10_favorito)
