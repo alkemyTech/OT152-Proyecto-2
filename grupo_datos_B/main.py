@@ -94,7 +94,7 @@ def promedio_score():
     mapped = list(filter(None, mapped))
     lista = dict(map(calulate_top_10, mapped))
     top_10 = Counter(lista).most_common(10)
-    mat =[]
+    mat = []
     for i in top_10:
         buscar = i[0]
         for j in mapped:
@@ -103,7 +103,7 @@ def promedio_score():
                 mat.append(resultado)
             except Exception:
                 None
-    average = reduce(lambda x, y: x+y, mat)/float(len(mat))   
+    average = reduce(lambda x, y: x+y, mat)/float(len(mat))
     return average
 
 
