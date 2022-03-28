@@ -1,7 +1,21 @@
+import logging
+import logging.config
+
+from decouple import config
+
 from datetime import datetime
 from functools import reduce
 from collections import Counter
 import xml.etree.ElementTree as Et
+
+
+
+cfg_logging = config('CFG_PATH')
+
+logging.config.fileConfig(cfg_logging)
+
+logger = logging.getLogger('log_datos_e')
+
 
 
 def chunkify(iterable, len_of_chunk):
@@ -29,7 +43,7 @@ def reducir_counter(data1, data2):
     return data1
 
 
-tree = Et.parse(r'/Users/joelsolaligue/Desktop/Joel/ALKEMY/big_data/OT152-Proyecto-2/Grupo_Datos_E/posts.xml')
+tree = Et.parse('posts.xml')
 root = tree.getroot()
 
 data_chunks = chunkify(root, 50)
@@ -38,7 +52,7 @@ mapped = list(map(Counter, mapped))
 reduced = reduce(reducir_counter, mapped)
 top_ten_post = reduced.most_common(10)
 
-#print("\nTop 10 fechas con mayor cantidad de post creados\n", top_ten_post)
+print("\nTop 10 fechas con mayor cantidad de post creados\n", top_ten_post)
 
 # Relacion entre cantidad de respuestas y visitas
 
@@ -60,15 +74,6 @@ def reducir_counter(data1, data2):
     return data1
 
 
-# def reducir_contadores(data1, data2):
-#     for key, value in data2.items():
-#         if key in data1.keys():
-#             data1[key].update(data2[key])
-#         else:
-#             data1.update({key: value})
-#     return data1
-
-
 def mapper_answer_view(data):
     post_mapeados = list(map(respuestas_visitas, data))
     post_mapeados = list(filter(None, post_mapeados))
@@ -82,7 +87,6 @@ def mapper_answer_view(data):
 data_chunks = chunkify(root, 50)
 mapped_answer_view = list(map(mapper_answer_view, data_chunks))
 mapped_answer_view = list(filter(None, mapped_answer_view))
-#print(mapped_answer_view)
 reduced = reduce(reducir_counter, mapped_answer_view)
 
 key_1, value_2 = reduced.keys(), reduced.values()
