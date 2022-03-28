@@ -40,6 +40,11 @@ def reduce_counter(data1, data2):
     data1.update(data2)
     return data1
 
+def calculate_top_10_less(data):
+    top_10 = dict(data.most_common()[-10:])
+    top_10 = list(top_10.keys())
+    return top_10
+
 # Parse the file with posts data
 tree = ET.parse('posts.xml')
 root = tree.getroot()
@@ -50,12 +55,14 @@ def top_10_dates_less_post():
     # Apply mapper and reducer functions
     mapped = list(map(mapper, data_chunks))
     mapped = list(map(Counter, mapped))
-    reducido = reduce(reduce_counter, mapped)
+    reduced = reduce(reduce_counter, mapped)
     # Get and show top 10 dates with less posts
-    top_10_dates_less_post = reducido.most_common()[-10:]
-    logging.info(' Descargados el Top 10 de fechas con menor cantidad de post creados')
-    
-    return(print('Top 10 dates with less posts:\n',top_10_dates_less_post))
+    top_10_dates = calculate_top_10_less(reduced)
+    print('Top 10 date with less posts:')
+    for i in range(len(top_10_dates)):
+        print(' - ', top_10_dates[i])
+    logging.info(' Top 10 dates with less posts - Downloaded')
+    return
 
 # Run main code
 if __name__ == '__main__':
