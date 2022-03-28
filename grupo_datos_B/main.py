@@ -93,14 +93,23 @@ def promedio_score():
     mapped = list(map(get_repuestas_favoritas, root))
     mapped = list(filter(None, mapped))
     lista = dict(map(calulate_top_10, mapped))
-    mapped1 = Counter(lista).most_common(10)
-    x =list(filter(lambda item: item[mapped[0]] == 'Richard', listOfDicts))
-    return mapped1
+    top_10 = Counter(lista).most_common(10)
+    mat =[]
+    for i in top_10:
+        buscar = i[0]
+        for j in mapped:
+            try:
+                resultado = j[buscar][1]
+                mat.append(resultado)
+            except Exception:
+                None
+    average = reduce(lambda x, y: x+y, mat)/float(len(mat))   
+    return average
 
 
-# top_10 = get_10_sin_repuestas()
-# relacion_palabra_visita = palabra_vs_visita()
-# print(top_10)
-# print(relacion_palabra_visita)
-top_10_favorito = promedio_score()
-print(top_10_favorito)
+top_10 = get_10_sin_repuestas()
+relacion_palabra_visita = palabra_vs_visita()
+print(top_10)
+print(relacion_palabra_visita)
+top_10_average = promedio_score()
+print(top_10_average)
