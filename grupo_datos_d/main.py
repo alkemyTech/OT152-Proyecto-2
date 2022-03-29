@@ -1,6 +1,6 @@
+import defusedxml.ElementTree as Et
 import logging.config
 import os
-import defusedxml.ElementTree as Et
 from functools import reduce
 from math import ceil
 
