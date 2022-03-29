@@ -131,3 +131,21 @@ Relacion entre cantidad de respuestas y sus visitas:0.01%
 '29-Mar-2022' - INFO -  log_datos_e - 
 Tiempo de respuesta promedio en top 0-100: 354 days, 0:00:00
 
+'29-Mar-2022' - INFO -  log_datos_e - Top 10 fechas con mayor cantidad de post creados
+ [(datetime.date(2009, 6, 29), 395), (datetime.date(2009, 6, 30), 379), (datetime.date(2009, 6, 28), 348), (datetime.date(2009, 7, 2), 325), (datetime.date(2009, 7, 13), 310), (datetime.date(2009, 7, 9), 298), (datetime.date(2009, 7, 7), 292), (datetime.date(2009, 7, 6), 291), (datetime.date(2009, 7, 17), 284), (datetime.date(2009, 7, 20), 283)]
+
+'29-Mar-2022' - INFO -  log_datos_e - 
+Relacion entre cantidad de respuestas y sus visitas:0.01%
+
+'29-Mar-2022' - INFO -  log_datos_e - 
+Tiempo de respuesta promedio en top 0-100: 354 days, 0:00:00
+
+'29-Mar-2022' - INFO -  log_datos_e - Top 10 fechas con mayor cantidad de post creados
+ [(datetime.date(2009, 6, 29), 395), (datetime.date(2009, 6, 30), 379), (datetime.date(2009, 6, 28), 348), (datetime.date(2009, 7, 2), 325), (datetime.date(2009, 7, 13), 310), (datetime.date(2009, 7, 9), 298), (datetime.date(2009, 7, 7), 292), (datetime.date(2009, 7, 6), 291), (datetime.date(2009, 7, 17), 284), (datetime.date(2009, 7, 20), 283)]
+
+'29-Mar-2022' - INFO -  log_datos_e - 
+Relacion entre cantidad de respuestas y sus visitas:0.01%
+
+'29-Mar-2022' - INFO -  log_datos_e - 
+Tiempo de respuesta promedio en top 0-100: 354 days, 0:00:00
+
