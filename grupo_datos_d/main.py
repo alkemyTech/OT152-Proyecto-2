@@ -4,7 +4,6 @@ from functools import reduce
 from math import ceil
 
 import defusedxml.ElementTree as Et
-
 import task1
 import task2
 import task3
