@@ -1,22 +1,11 @@
-import logging
-import logging.config
-
-from decouple import config
-
 from datetime import datetime
 from functools import reduce
 from collections import Counter
 import xml.etree.ElementTree as Et
 
 
-
-cfg_logging = config('CFG_PATH')
-
-logging.config.fileConfig(cfg_logging)
-
-logger = logging.getLogger('log_datos_e')
-
-
+def get_xml():
+    return Et.parse('posts.xml')
 
 def chunkify(iterable, len_of_chunk):
     for i in range(0, len(iterable), len_of_chunk):
@@ -43,7 +32,7 @@ def reducir_counter(data1, data2):
     return data1
 
 
-tree = Et.parse('posts.xml')
+tree = get_xml()
 root = tree.getroot()
 
 data_chunks = chunkify(root, 50)
@@ -83,6 +72,8 @@ def mapper_answer_view(data):
         return
     return reducido
 
+tree = get_xml()
+root = tree.getroot()
 
 data_chunks = chunkify(root, 50)
 mapped_answer_view = list(map(mapper_answer_view, data_chunks))
