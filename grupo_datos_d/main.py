@@ -1,6 +1,6 @@
 import logging.config
 import os
-import xml.etree.ElementTree as Et
+import defusedxml.ElementTree as Et
 from functools import reduce
 from math import ceil
 
@@ -46,8 +46,8 @@ def get_treeroot():
     # Load specific xml requested
     try:
         file_xml = Et.parse(root_folder + '\\posts.xml')
-    except Exception as E:
-        logger.error(f"Error obtaining xml file in root path: {E}")
+    except Exception as e:
+        logger.error(f"Error obtaining xml file in root path: {e}")
         exit()
     return file_xml.getroot()
 
@@ -64,14 +64,16 @@ if __name__ == '__main__':
 
     # Task 1
     task1_ans = mapreduce(task1)
+    expression_ans1 = ', '.join([x[0] for x in task1_ans.most_common(10)])
     logging.info(
-        f"Top 10 tags de post sin respuestas aceptadas: {', '.join([x[0] for x in task1_ans.most_common(10)])}")
+        f"Top 10 tags de post sin respuestas aceptadas: {expression_ans1}")
 
     # Task 2
     task2_ans = mapreduce(task2)
-    logging.info(f"Relación entre cantidad de respuestas de un post y su puntaje: {'{:.3f}'.format(task2_ans[0])}")
+    expresion_ans2 = '{:.3f}'.format(task2_ans[0])
+    logging.info(f"Relación entre cantidad de respuestas de un post y su puntaje: {expresion_ans2}")
 
     # Task 3
     task3_ans = mapreduce(task3)
-    logging.info(
-        f"Top 10 preguntas que tuvieron mayor tiempo de actividad: {', '.join([x[0] for x in task3_ans.most_common(10)])}")
+    expression_ans3 = ', '.join([x[0] for x in task3_ans.most_common(10)])
+    logging.info(f"Top 10 preguntas que tuvieron mayor tiempo de actividad: {expression_ans3}")

@@ -2,8 +2,8 @@
 Top 10 preguntas que tuvieron mayor tiempo de actividad
 """
 from collections import Counter
-from functools import reduce
 from datetime import datetime
+from functools import reduce
 
 
 def parse_datetime(string):

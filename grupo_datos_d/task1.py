@@ -2,8 +2,8 @@
 Top 10 tags de post sin respuestas aceptadas
 """
 from collections import Counter
-from functools import reduce
 import re
+from functools import reduce
 
 
 def get_tags(data):
