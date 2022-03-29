@@ -1,8 +1,9 @@
-import defusedxml.ElementTree as Et
 import logging.config
 import os
 from functools import reduce
 from math import ceil
+
+import defusedxml.ElementTree as Et
 
 import task1
 import task2
